@@ -9,7 +9,234 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Bubbergamesites/graggle@main/styles.css">
+    <style>
+           :root {
+            --primary: #fff;
+            --surface: rgba(255, 255, 255, 0.1);
+            --surface-heavy: rgba(255, 255, 255, 0.2);
+            --text: #000;
+            --radius-lg: 20px;
+            --radius-sm: 12px;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content h1 {
+            font-size: 55px;
+            /* Adjust this number to make it even bigger */
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: url('https://ghapadharabalagga.pages.dev/netlii-bg.avif') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            color: var(--text);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-btn {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: 900;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .sidebar-btn:hover:not(.empty) {
+            background: var(--primary);
+            color: black;
+            transform: translateX(5px);
+        }
+
+        .sidebar-btn.empty {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 100px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        .search-container {
+            position: sticky;
+            top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            z-index: 900;
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #gameSearch {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 25px;
+            font-size: 16px;
+            font-family: 'Nunito', sans-serif;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+
+        .letter-header {
+            font-weight: 900;
+            font-size: 42px;
+            border-bottom: 2px solid var(--primary);
+            margin: 40px 0 20px 0;
+            display: inline-block;
+        }
+
+        .buttons-container {
+            color display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .game-button {
+            background: var(--surface);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-button:hover {
+            background: var(--primary);
+            color: black;
+            transform: translateY(-3px);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 95%;
+            height: 90%;
+            max-width: 1200px;
+            background: #000;
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            color: white;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #modalTitle {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ctrl-btn {
+            background: var(--surface);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .ctrl-btn:hover {
+            background: var(--primary);
+            color: black;
+        }
+
+        .close-btn {
+            background: #ff4747;
+        }
+
+        .close-btn:hover {
+            background: #ff0000;
+            color: white;
+        }
+
+        .game-frame-container {
+            flex: 1;
+            position: relative;
+            background: #111;
+        }
+
+        #gameFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
