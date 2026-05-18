@@ -165,6 +165,7 @@
 "badpiggieslatest",
 "badtimesim",
 "badtimesimulator",
+"balatro",
 "balatrogba",
 "baldicaseoh",
 "baldidecomp",
