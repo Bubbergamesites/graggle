@@ -959,6 +959,8 @@
 "gimmietheairpod",
 "gladdihoppers",
 "glfighters",
+"globbychase",
+"globbychase3d",
 "gloryhunters",
 "glover",
 "goalsouthafrica",
