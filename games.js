@@ -776,6 +776,7 @@
 "finalfantasyVIId3",
 "finalfantasyVIItheothertetrr",
 "finalninja",
+"FindBubber3D",
 "findthealien",
 "fireblob",
 "fireboyandwatergirl",
